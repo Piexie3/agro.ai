@@ -102,6 +102,12 @@ input[type="tel"]:focus {
         <img src="{{ url_for('static', filename='images/logo.png') }}" style="width: 100px; height: 50px"alt="">
       </div>
       <div id="form-wrapper">
+        {%if exist_message%}
+      <div class="alert alert-danger">
+        <center>{{exists_message}}</center> 
+      </div>
+      {%endif%}
+      <form action="/login" method="post">
         <div>
           <h2>Login</h2>
         </div>
@@ -120,6 +126,7 @@ input[type="tel"]:focus {
           <button>Log In with Facebook</button>
           <button>Log In with Google</button>
         </div>
+      </form>
       </div>
     </div>
 

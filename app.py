@@ -75,7 +75,7 @@ firebaseconfig = {
     "messagingSenderId": "378387246571",
     "appId": "1:378387246571:web:3c399eb3f6fc8eddc17dae",
     "measurementId": "G-VTGCWS794Z",
-    "Databaseurl": ""
+    "databaseURL": ""
 }
 
 firebase = pyrebase.initialize_app(firebaseconfig)
@@ -150,12 +150,20 @@ app = Flask(__name__)
 @ app.route('/signup', methods = ['POST', 'GET'])
 def signup():
     if(request.method == 'POST'):
-         userName = request.form.get('password')
-         email = request.form.get('password')
-         password = request.form.get('password')
-         password = request.form.get('password')
-         password = request.form.get('password')
-         pass
+         passw0 = request.form.get('password')
+         pasw1 = request.form.get('confirm-password')
+         if passw0 == pasw1:
+            try:
+                userName = request.form.get('username')
+                email = request.form.get('email')
+                pasword = request.form.get('password')
+                phone = request.form.get('phone')
+                user = auth.create_user_with_email_and_password(email, pasword,)
+                auth.send_email_verification(user["idToken"])
+                return render_template('verify_email.html')
+            except:
+                excisting_account = 'This email is already in use'
+                return render_template('signup.html', exist_message= excisting_account)
     return render_template('signup.html')   
 
 @ app.route('/login' ,methods= ['GET', 'POST'])
@@ -169,7 +177,8 @@ def login():
             user = auth.sign_in_with_email_and_password (email, password)
             session['user'] = email
         except:
-            return "Failed to login"
+            excisting_account = 'Invalib password or email address or the Email entered does not exist.'
+            return render_template('login.html', exist_message= excisting_account)
     return render_template('login.html')
 
 
@@ -182,7 +191,7 @@ def logout():
 # render home page
 
 
-@ app.route('/')
+@ app.route('/home')
 def home():
     return render_template('index.html')
 
