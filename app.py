@@ -1,6 +1,6 @@
 # Importing essential libraries and modules
 
-from flask import Flask, redirect, render_template, request, Markup
+from flask import Flask, redirect, render_template, request, session
 import numpy as np
 import pandas as pd
 from disease_dic import disease_dic
@@ -14,6 +14,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from model import ResNet9
+import pyrebase
 
 
 # ==============================================================================================
@@ -65,6 +66,20 @@ disease_model = ResNet9(3, len(disease_classes))
 disease_model.load_state_dict(torch.load(
     disease_model_path, map_location=torch.device('cpu')))
 disease_model.eval()
+
+firebaseconfig = {
+    "apiKey": "AIzaSyAS_4TyLBoLj7V5xF35dTYVg6jB7bEWERc",
+    "authDomain": "agroai-8a43c.firebaseapp.com",
+    "projectId": "agroai-8a43c",
+    "storageBucket": "agroai-8a43c.appspot.com",
+    "messagingSenderId": "378387246571",
+    "appId": "1:378387246571:web:3c399eb3f6fc8eddc17dae",
+    "measurementId": "G-VTGCWS794Z",
+    "Databaseurl": ""
+}
+
+firebase = pyrebase.initialize_app(firebaseconfig)
+auth = firebase.auth()
 
 
 # Loading crop recommendation model
@@ -132,13 +147,37 @@ app = Flask(__name__)
 
 # render signup and login form
 
-@ app.route('/signup')
+@ app.route('/signup', methods = ['POST', 'GET'])
 def signup():
-    return render_template('signup.html')
+    if(request.method == 'POST'):
+         userName = request.form.get('password')
+         email = request.form.get('password')
+         password = request.form.get('password')
+         password = request.form.get('password')
+         password = request.form.get('password')
+         pass
+    return render_template('signup.html')   
 
-@ app.route('/login')
+@ app.route('/login' ,methods= ['GET', 'POST'])
 def login():
+    if('user' in session):
+        return 'Hi {}'.format(session['user'])
+    if(request.method == 'POST'):
+        email = request.form.get('email')
+        password = request.form.get('password')
+        try:
+            user = auth.sign_in_with_email_and_password (email, password)
+            session['user'] = email
+        except:
+            return "Failed to login"
     return render_template('login.html')
+
+
+@ app.route('/logout')
+def logout():
+    session.pop('user')
+
+    return redirect('login.html')
 
 # render home page
 
