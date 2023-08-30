@@ -1,6 +1,6 @@
 # Importing essential libraries and modules
 
-from flask import Flask, render_template, request, Markup
+from flask import Flask, redirect, render_template, request, Markup
 import numpy as np
 import pandas as pd
 from disease_dic import disease_dic
