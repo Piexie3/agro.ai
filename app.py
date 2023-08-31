@@ -1,6 +1,7 @@
 # Importing essential libraries and modules
 
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, Markup
+# from markupsafe import Markup
 import numpy as np
 import pandas as pd
 from disease_dic import disease_dic
@@ -80,7 +81,10 @@ firebaseconfig = {
 
 firebase = pyrebase.initialize_app(firebaseconfig)
 auth = firebase.auth()
-
+storage = firebase.storage()
+db = firebase.database()
+email = "test@gmail.com"
+password = "123456"
 
 # Loading crop recommendation model
 
@@ -175,10 +179,10 @@ def login():
         password = request.form.get('password')
         try:
             user = auth.sign_in_with_email_and_password (email, password)
-            session['user'] = email
+            session['user'] = user
         except:
-            excisting_account = 'Invalib password or email address or the Email entered does not exist.'
-            return render_template('login.html', exist_message= excisting_account)
+            excisting_account = 'Invalid password or email address or the Email entered does not exist.'
+            return render_template('login.html', exist_message = excisting_account)
     return render_template('login.html')
 
 
@@ -191,7 +195,7 @@ def logout():
 # render home page
 
 
-@ app.route('/home')
+@ app.route('/')
 def home():
     return render_template('index.html')
 
@@ -246,7 +250,6 @@ def crop_prediction():
         else:
 
             return render_template('try_again.html')
-
 # render fertilizer recommendation result page
 
 
@@ -308,7 +311,6 @@ def disease_prediction():
         return render_template('disease-result.html', prediction=prediction)
 
     return render_template('disease.html')
-
 
 # ===============================================================================================
 if __name__ == '__main__':

@@ -98,13 +98,22 @@ input[type="tel"]:focus {
 </style>
   <body>
     <div>
-      <div id="logo">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" style="width: 100px; height: 50px"alt="">
-      </div>
+      
       <div id="form-wrapper">
         {%if exist_message%}
       <div class="alert alert-danger">
-        <center>{{exists_message}}</center> 
+        <div class="container py-2 mx-auto my-50 h-10 text-center" style="margin: 9rem;">
+          <div class="row">
+            <div class="col-sm py-2 py-md-3">
+              <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
+                <h1 class="text-center" style="color: black; font-size: 20px;"><b>
+                    We have just send an email for you to verify your account.
+                    Please check your email address to verify your account to continue
+                    </b></h1>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {%endif%}
       <form action="/login" method="post">
@@ -112,8 +121,8 @@ input[type="tel"]:focus {
           <h2>Login</h2>
         </div>
         <div>
-          <label for="username"></label>
-          <input type="text"  id="username" name="username" placeholder="username">
+          <label for="email"></label>
+          <input type="text"  id="email" name="email" placeholder="Email">
         </div>
         <div>
           <label for="password"></label>

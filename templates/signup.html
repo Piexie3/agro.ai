@@ -164,24 +164,12 @@
           <input type="submit" value="Sign Up">
         </div>
       </form>
+      <div class="alt-login">
+        <button>Sign Up with Facebook</button>
+        <button>Sign Up with Google</button>
+      </div>
     </div>
   </div>
-  <!-- <script>
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const altLoginButtons = document.querySelectorAll('.alt-login button');
-
-    altLoginButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        if (button.innerText === 'Sign Up with Facebook') {
-          emailInput.placeholder = 'Facebook';
-        } else {
-          emailInput.placeholder = 'Email';
-        }
-        phoneInput.style.display = 'none';
-        emailInput.style.display = 'block';
-      }); cd
-    });
-  </script> -->
+  
 
 {% endblock %}
