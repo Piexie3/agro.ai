@@ -203,6 +203,11 @@ def fertilizer_recommendation():
 def disease():
     return render_template('disease.html')
 
+
+@ app.route('/contact_an_expert')
+def contact_an_expert():
+    return render_template('contact_expert.html')
+
 # ===============================================================================================
 
 # RENDER PREDICTION PAGES
