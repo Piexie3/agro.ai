@@ -326,19 +326,19 @@ def connect_to_expert():
     print(dtmfDigits)
 
     if is_active == '1':
-        if dtmfDigits == 1 :
+        if dtmfDigits == "1":
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
             response += '<Say>Please wait as we connect you to the next available crop expert</Say>'
             response += '<Dial phoneNumbers="+254711959117" />'
             response += '</Response>'
-        elif dtmfDigits == 2 :
+        elif dtmfDigits == "2" :
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
             response += '<Say>Please wait as we connect you to the next available crop fertilizer expert</Say>'
             response += '<Dial phoneNumbers="+254717964288" />'
             response += '</Response>'
-        elif dtmfDigits == 3 :
+        elif dtmfDigits == "3" :
             response = '<?xml version="1.0" encoding="UTF-8"?>'
             response += '<Response>'
             response += '<Say>Please wait as we connect you to the next available crop disease expert</Say>'
