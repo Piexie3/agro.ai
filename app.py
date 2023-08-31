@@ -238,8 +238,8 @@ def crop_prediction():
         else:
 
             return render_template('try_again.html')
-# render fertilizer recommendation result page
 
+# render fertilizer recommendation result page
 
 @ app.route('/fertilizer-predict', methods=['POST'])
 def fert_recommend():
