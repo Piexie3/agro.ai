@@ -309,9 +309,10 @@ def initate_call():
         response = '<?xml version="1.0" encoding="UTF-8"?>'
         response += '<Response>'
         response += '<GetDigits timeout="30" finishOnKey="#" callbackUrl="https://agrotech-dk2z.onrender.com/connect_to_expert">'
-        response += '<Say>Welcome to Agro ai, type 1 to connect to a fertilizer expert, type 2 to connect to a crop disease expert. After the number follow it with a hash sign</Say>'
+        response += '<Say>Welcome to Agro ai, type 1 to connect to a fertilizer expert, type 2 to connect to a crop fertilizers expert,type 3 to connect to a crop disease expert. After the number follow it with a hash sign.</Say>'
         response += '</GetDigits>'
         response += '</Response>'
+
 
         return Response(response, content_type='application/xml')
 
@@ -320,6 +321,9 @@ def initate_call():
 def connect_to_expert():
     session_id = request.form.get('sessionId')
     is_active = request.form.get('isActive')
+    dtmfDigits = request.form.get('dtmfDigits')
+
+    print(dtmfDigits)
 
     if is_active == '1':
         response = '<?xml version="1.0" encoding="UTF-8"?>'
