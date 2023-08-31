@@ -1,6 +1,6 @@
 # Importing essential libraries and modules
 
-from flask import Flask, redirect, render_template, request, session, Markup
+from flask import Flask, redirect, render_template, request, session, Markup, Response
 # from markupsafe import Markup
 import numpy as np
 import pandas as pd
@@ -294,6 +294,37 @@ def disease_prediction():
         return render_template('disease-result.html', prediction=prediction)
 
     return render_template('disease.html')
+
+@app.route('/initiate_call', methods=['GET', 'POST'])
+def initate_call():
+    session_id = request.form.get('sessionId')
+    is_active = request.form.get('isActive')
+
+    if is_active == '1':
+        response = '<?xml version="1.0" encoding="UTF-8"?>'
+        response += '<Response>'
+        response += '<GetDigits timeout="30" finishOnKey="#" callbackUrl="https://df29-197-156-137-151.ngrok-free.app/connect_to_expert">'
+        response += '<Say>Welcome to Agro ai, type 1 to connect to a fertilizer expert, type 2 to connect to a crop disease expert. After the number follow it with a hash sign</Say>'
+        response += '</GetDigits>'
+        response += '</Response>'
+
+        return Response(response, content_type='application/xml')
+
+
+@app.route('/connect_to_expert', methods=['GET', 'POST'])
+def connect_to_expert():
+    session_id = request.form.get('sessionId')
+    is_active = request.form.get('isActive')
+
+    if is_active == '1':
+        response = '<?xml version="1.0" encoding="UTF-8"?>'
+        response += '<Response>'
+        response += '<Dial phoneNumbers="+254711959117" />'
+        response += '</Response>'
+
+        return Response(response, content_type='application/xml')
+
+
 
 # ===============================================================================================
 if __name__ == '__main__':
