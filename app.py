@@ -308,8 +308,8 @@ def initate_call():
     if is_active == '1':
         response = '<?xml version="1.0" encoding="UTF-8"?>'
         response += '<Response>'
-        response += '<GetDigits timeout="30" finishOnKey="#" callbackUrl="https://agrotech-dk2z.onrender.com/connect_to_expert">'
-        response += '<Say>Welcome to Agro ai, type 1 to connect to a fertilizer expert, type 2 to connect to a crop fertilizers expert,type 3 to connect to a crop disease expert. After the number follow it with a hash sign.</Say>'
+        response += '<GetDigits timeout="40" finishOnKey="#" callbackUrl="https://agrotech-dk2z.onrender.com/connect_to_expert">'
+        response += '<Say>Welcome to Agro ai, type 1 to connect to a Crop expert, type 2 to connect to a crop fertilizers expert,type 3 to connect to a crop disease expert. After the number follow it with a hash sign.</Say>'
         response += '</GetDigits>'
         response += '</Response>'
 
@@ -326,12 +326,33 @@ def connect_to_expert():
     print(dtmfDigits)
 
     if is_active == '1':
-        response = '<?xml version="1.0" encoding="UTF-8"?>'
-        response += '<Response>'
-        response += '<Dial phoneNumbers="+254711959117" />'
-        response += '</Response>'
+        if dtmfDigits == 1 :
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<Say>Please wait as we connect you to the next available crop expert</Say>'
+            response += '<Dial phoneNumbers="+254711959117" />'
+            response += '</Response>'
+        elif dtmfDigits == 2 :
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<Say>Please wait as we connect you to the next available crop fertilizer expert</Say>'
+            response += '<Dial phoneNumbers="+254717964288" />'
+            response += '</Response>'
+        elif dtmfDigits == 3 :
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<Say>Please wait as we connect you to the next available crop disease expert</Say>'
+            response += '<Dial phoneNumbers="+254746594833" />'
+            response += '</Response>'
+        else:
+            response = '<?xml version="1.0" encoding="UTF-8"?>'
+            response += '<Response>'
+            response += '<GetDigits timeout="40" finishOnKey="#" callbackUrl="https://agrotech-dk2z.onrender.com/connect_to_expert">'
+            response += '<Say>Please input a number between one and Three, please type 1 to connect to a Crop expert, type 2 to connect to a crop fertilizers expert,type 3 to connect to a crop disease expert. After the number follow it with a hash sign.</Say>'
+            response += '</GetDigits>'
+            response += '</Response>'
 
-        return Response(response, content_type='application/xml')
+    return Response(response, content_type='application/xml')
 
 
 
