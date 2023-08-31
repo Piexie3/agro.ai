@@ -15,7 +15,6 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from model import ResNet9
-import pyrebase
 
 
 # ==============================================================================================
@@ -68,23 +67,9 @@ disease_model.load_state_dict(torch.load(
     disease_model_path, map_location=torch.device('cpu')))
 disease_model.eval()
 
-firebaseconfig = {
-    "apiKey": "AIzaSyAS_4TyLBoLj7V5xF35dTYVg6jB7bEWERc",
-    "authDomain": "agroai-8a43c.firebaseapp.com",
-    "projectId": "agroai-8a43c",
-    "storageBucket": "agroai-8a43c.appspot.com",
-    "messagingSenderId": "378387246571",
-    "appId": "1:378387246571:web:3c399eb3f6fc8eddc17dae",
-    "measurementId": "G-VTGCWS794Z",
-    "databaseURL": ""
-}
 
-firebase = pyrebase.initialize_app(firebaseconfig)
-auth = firebase.auth()
-storage = firebase.storage()
-db = firebase.database()
-email = "test@gmail.com"
-password = "123456"
+
+
 
 # Loading crop recommendation model
 
@@ -162,8 +147,6 @@ def signup():
                 email = request.form.get('email')
                 pasword = request.form.get('password')
                 phone = request.form.get('phone')
-                user = auth.create_user_with_email_and_password(email, pasword,)
-                auth.send_email_verification(user["idToken"])
                 return render_template('verify_email.html')
             except:
                 excisting_account = 'This email is already in use'
@@ -174,15 +157,15 @@ def signup():
 def login():
     if('user' in session):
         return 'Hi {}'.format(session['user'])
-    if(request.method == 'POST'):
-        email = request.form.get('email')
-        password = request.form.get('password')
-        try:
-            user = auth.sign_in_with_email_and_password (email, password)
-            session['user'] = user
-        except:
-            excisting_account = 'Invalid password or email address or the Email entered does not exist.'
-            return render_template('login.html', exist_message = excisting_account)
+    # if(request.method == 'POST'):
+    #     email = request.form.get('email')
+    #     password = request.form.get('password')
+    #     try:
+    #         user = auth.sign_in_with_email_and_password (email, password)
+    #         session['user'] = user
+    #     except:
+    #         excisting_account = 'Invalid password or email address or the Email entered does not exist.'
+    #         return render_template('login.html', exist_message = excisting_account)
     return render_template('login.html')
 
 
