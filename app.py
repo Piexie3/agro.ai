@@ -303,7 +303,7 @@ def initate_call():
     if is_active == '1':
         response = '<?xml version="1.0" encoding="UTF-8"?>'
         response += '<Response>'
-        response += '<GetDigits timeout="30" finishOnKey="#" callbackUrl="https://df29-197-156-137-151.ngrok-free.app/connect_to_expert">'
+        response += '<GetDigits timeout="30" finishOnKey="#" callbackUrl="https://agrotech-dk2z.onrender.com/connect_to_expert">'
         response += '<Say>Welcome to Agro ai, type 1 to connect to a fertilizer expert, type 2 to connect to a crop disease expert. After the number follow it with a hash sign</Say>'
         response += '</GetDigits>'
         response += '</Response>'
